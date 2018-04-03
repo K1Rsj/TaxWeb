@@ -18,17 +18,17 @@ public class Servlet extends HttpServlet {
         HashMap<String, BigDecimal> result = new HashMap<>();
         PrintWriter writer = response.getWriter();
         TaxSheet taxSheet = new TaxSheet();
+        Enumeration<String> parameterNames = request.getParameterNames();
 
-        String income = parseWhiteSpace(request.getParameter("income"));
-        String sales = parseWhiteSpace(request.getParameter("sales"));
-        String interest = parseWhiteSpace(request.getParameter("interest"));
-        String gift = parseWhiteSpace(request.getParameter("gift"));
-
-        if (checkInputData(income) && checkInputData(sales) && checkInputData(interest) && checkInputData(gift)) {
-            putAllUserDataIntoMap(request, result);
-        }
-        else {
-            request.getRequestDispatcher("WrongInputData.html").forward(request, response);
+        while (parameterNames.hasMoreElements()) {
+            String parameterName = parameterNames.nextElement();
+            String parameterValue = parseWhiteSpace(request.getParameter(parameterName));
+            if (checkInputData(parameterValue)) {
+                result.put(parameterName, new BigDecimal(parameterValue));
+            }
+            else {
+                request.getRequestDispatcher("WrongInputData.html").forward(request, response);
+            }
         }
         taxSheet.setInputData(result);
         taxSheet.createTaxSheet();
@@ -38,22 +38,13 @@ public class Servlet extends HttpServlet {
 
     }
 
-    private synchronized void putAllUserDataIntoMap(HttpServletRequest request, HashMap<String, BigDecimal> map) {
-        Enumeration<String> parameterNames = request.getParameterNames();
-        while (parameterNames.hasMoreElements()) {
-            String paramName = parameterNames.nextElement();
-            map.put(paramName, new BigDecimal(parseWhiteSpace(request.getParameter(paramName))));
-
-        }
-    }
-
     private boolean checkInputData(String data) {
-        return data.matches("\\d+");
+        return data.matches("\\d+(.?)\\d*");
     }
 
     private String parseWhiteSpace(String stringForCheck) {
         if (stringForCheck.equals("")) {
-            return "0";
+            return "0.0";
         }
         return stringForCheck;
     }

@@ -1,17 +1,41 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:text-align="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Tax</title>
 </head>
 <body>
-    <form method="get" action="/servlet" name="taxes">
-        Income<input type="text" name="income">
-        Sales<input type="text" name="sales">
-        Interest<input type="text" name="interest">
-        Gift<input type="text" name="gift">
-        <br>
-        <input type="submit" value="Send">
+    <form method="post" action="/servlet" name="taxes">
+        <table border="1px" style = text-align:center>
+        <tr>
+            <td>Your name</td>
+            <td><input type="text" name="name"></td>
+        </tr>
+        <tr>
+            <td>Your surname</td>
+            <td><input type="text" name="surname"></td>
+        </tr>
+        <tr>
+            <td>Income</td>
+            <td><input type="text" name="income"></td>
+        </tr>
+        <tr>
+            <td>Sales</td>
+            <td><input type="text" name="sales"></td>
+        </tr>
+        <tr>
+            <td>Interest</td>
+            <td><input type="text" name="interest"></td>
+        </tr>
+        <tr>
+            <td>Gift</td>
+            <td><input type="text" name="gift"></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Send"></td>
+        </tr>
+        </table>
+
     </form>
 </body>
 </html>

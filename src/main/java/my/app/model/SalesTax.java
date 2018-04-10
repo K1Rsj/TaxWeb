@@ -13,4 +13,6 @@ public class SalesTax extends Tax {
         this.value = value.multiply(BigDecimal.valueOf(0.1));
     }
 
+
+
 }

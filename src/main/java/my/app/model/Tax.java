@@ -11,6 +11,10 @@ public abstract class Tax {
         calculateTax(value);
     }
 
+    public BigDecimal getValue() {
+        return value;
+    }
+
     @Override
     public String toString() {
         return "Your " + this.getClass().getSimpleName().toLowerCase() + "= " + value;

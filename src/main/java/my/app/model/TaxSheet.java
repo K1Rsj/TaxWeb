@@ -12,19 +12,18 @@ public class TaxSheet {
     public synchronized void createTaxSheet() {
         outputData = new ArrayList<>();
         for (Map.Entry<String, BigDecimal> pair : inputData.entrySet()) {
-            switch (pair.getKey()) {
-                case "income":
-                    outputData.add(new IncomeTax(pair.getValue()));
-                    break;
-                case "sales":
-                    outputData.add(new SalesTax(pair.getValue()));
-                    break;
-                case "interest":
-                    outputData.add(new InterestTax(pair.getValue()));
-                    break;
-                case "gift":
-                    outputData.add(new GiftTax(pair.getValue()));
-                    break;
+            if ("income".equals(pair.getKey())) {
+                outputData.add(new IncomeTax(pair.getValue()));
+
+            } else if ("sales".equals(pair.getKey())) {
+                outputData.add(new SalesTax(pair.getValue()));
+
+            } else if ("interest".equals(pair.getKey())) {
+                outputData.add(new InterestTax(pair.getValue()));
+
+            } else if ("gift".equals(pair.getKey())) {
+                outputData.add(new GiftTax(pair.getValue()));
+
             }
         }
         outputData.sort(new TaxComparator());

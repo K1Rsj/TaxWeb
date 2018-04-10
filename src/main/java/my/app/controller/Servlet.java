@@ -14,7 +14,19 @@ import java.util.*;
 
 public class Servlet extends HttpServlet {
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    public void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws IOException, ServletException {
+        processRequest(request, response);
+    }
+
+    private void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
         HashMap<String, BigDecimal> result = new HashMap<>();
         PrintWriter writer = response.getWriter();
         TaxSheet taxSheet = new TaxSheet();
@@ -22,8 +34,8 @@ public class Servlet extends HttpServlet {
 
         while (parameterNames.hasMoreElements()) {
             String parameterName = parameterNames.nextElement();
-            String parameterValue = parseWhiteSpace(request.getParameter(parameterName));
-            if (checkInputData(parameterValue)) {
+            String parameterValue = InputUtil.parseWhiteSpace(request.getParameter(parameterName));
+            if (InputUtil.checkInputData(parameterValue)) {
                 result.put(parameterName, new BigDecimal(parameterValue));
             }
             else {
@@ -36,17 +48,6 @@ public class Servlet extends HttpServlet {
             writer.println(s);
         }
 
-    }
-
-    private boolean checkInputData(String data) {
-        return data.matches("\\d+(.?)\\d*");
-    }
-
-    private String parseWhiteSpace(String stringForCheck) {
-        if (stringForCheck.equals("")) {
-            return "0.0";
-        }
-        return stringForCheck;
     }
 
 }

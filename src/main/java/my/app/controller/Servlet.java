@@ -1,7 +1,8 @@
 package my.app.controller;
 
-import my.app.model.TaxSheet;
-import my.app.model.Tax;
+import my.app.model.entities.User;
+import my.app.model.entities.UserComparator;
+import my.app.model.database.UserDAOImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,25 +30,38 @@ public class Servlet extends HttpServlet {
 
         HashMap<String, BigDecimal> result = new HashMap<>();
         PrintWriter writer = response.getWriter();
-        TaxSheet taxSheet = new TaxSheet();
         Enumeration<String> parameterNames = request.getParameterNames();
 
         while (parameterNames.hasMoreElements()) {
             String parameterName = parameterNames.nextElement();
-            String parameterValue = InputUtil.parseWhiteSpace(request.getParameter(parameterName));
-            if (InputUtil.checkInputData(parameterValue)) {
-                result.put(parameterName, new BigDecimal(parameterValue));
+            if (parameterName.equals("name") || parameterName.equals("surname")) {
+                continue;
             }
-            else {
+            String parameterValue = InputUtil.parseWhiteSpace(request.getParameter(parameterName));
+            if (InputUtil.checkInputNumberData(parameterValue)) {
+                result.put(parameterName, new BigDecimal(parameterValue));
+            } else {
                 request.getRequestDispatcher("WrongInputData.html").forward(request, response);
             }
         }
-        taxSheet.setInputData(result);
-        taxSheet.createTaxSheet();
-        for (Tax s : taxSheet.getOutputData()) {
-            writer.println(s);
+
+        String name = request.getParameter("name");
+        String surname = request.getParameter("surname");
+        while (InputUtil.checkInputStringData(name) || InputUtil.checkInputStringData(surname)) {
+            request.getRequestDispatcher("WrongInputData.html").forward(request, response);
         }
+        User user = new User();
+        user.setName(name);
+        user.setSurname(surname);
+        user.createTaxSheet(result);
+        UserDAOImpl userDAO = new UserDAOImpl();
+        userDAO.addUser(user);
+        List<User> allUsers = userDAO.getAllUsers();
+        allUsers.sort(new UserComparator());
 
+        for (User s : allUsers) {
+            writer.println(s);
+            writer.println("<br>");
+        }
     }
-
 }

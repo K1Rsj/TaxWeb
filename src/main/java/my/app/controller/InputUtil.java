@@ -1,7 +1,7 @@
 package my.app.controller;
 
 public class InputUtil {
-    static boolean checkInputData(String data) {
+    static boolean checkInputNumberData(String data) {
         return data.matches("\\d+(.?)\\d*");
     }
 
@@ -10,5 +10,9 @@ public class InputUtil {
             return "0.0";
         }
         return stringForCheck;
+    }
+
+    static boolean checkInputStringData(String data) {
+        return !data.matches("^[А-Яа-яa-zA-ZЁёЇїІіЄєҐґ]+[А-Яа-яa-zA-ZЁёЇїІіЄєҐґ']+$") || data.equals("");
     }
 }

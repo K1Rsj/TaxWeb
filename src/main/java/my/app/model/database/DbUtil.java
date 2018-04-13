@@ -1,5 +1,7 @@
 package my.app.model.database;
 
+import my.app.GlobalConstants;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
@@ -16,12 +18,12 @@ public class DbUtil {
         else {
             try {
                 Properties prop = new Properties();
-                InputStream inputStream = DbUtil.class.getClassLoader().getResourceAsStream("db.properties");
+                InputStream inputStream = DbUtil.class.getClassLoader().getResourceAsStream(GlobalConstants.DB_PROPERTIES);
                 prop.load(inputStream);
-                String driver = prop.getProperty("driver");
-                String url = prop.getProperty("url");
-                String user = prop.getProperty("user");
-                String password = prop.getProperty("password");
+                String driver = prop.getProperty(GlobalConstants.MYSQL_DRIVER);
+                String url = prop.getProperty(GlobalConstants.DB_URL);
+                String user = prop.getProperty(GlobalConstants.DB_USER);
+                String password = prop.getProperty(GlobalConstants.DB_PASSWORD);
                 Class.forName(driver);
                 connection = DriverManager.getConnection(url, user, password);
 

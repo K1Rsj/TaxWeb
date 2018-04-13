@@ -1,18 +1,20 @@
 package my.app.controller;
 
+import my.app.GlobalConstants;
+
 public class InputUtil {
-    static boolean checkInputNumberData(String data) {
-        return data.matches("\\d+(.?)\\d*");
+    public static boolean checkInputNumberData(String data) {
+        return data.matches(GlobalConstants.NUMBER_REGEX);
     }
 
-    static String parseWhiteSpace(String stringForCheck) {
-        if (stringForCheck.equals("")) {
-            return "0.0";
+    public static String parseWhiteSpace(String stringForCheck) {
+        if (stringForCheck.equals(GlobalConstants.EMPTY_STRING)) {
+            return GlobalConstants.ZERO;
         }
         return stringForCheck;
     }
 
-    static boolean checkInputStringData(String data) {
-        return !data.matches("^[А-Яа-яa-zA-ZЁёЇїІіЄєҐґ]+[А-Яа-яa-zA-ZЁёЇїІіЄєҐґ']+$") || data.equals("");
+    public static boolean checkInputStringData(String data) {
+        return !data.matches(GlobalConstants.NAME_REGEX) || data.equals(GlobalConstants.EMPTY_STRING);
     }
 }

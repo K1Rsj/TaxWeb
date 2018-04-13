@@ -1,8 +1,10 @@
-package my.app.model.entities;
+package my.app.model.services;
+
+import my.app.model.entities.User;
 
 import java.util.Comparator;
 
-public class UserComparator implements Comparator<User> {
+public class UserNameComparator implements Comparator<User> {
 
     @Override
     public int compare(User o1, User o2) {

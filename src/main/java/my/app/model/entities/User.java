@@ -1,6 +1,9 @@
 package my.app.model.entities;
 
 
+import my.app.GlobalConstants;
+import my.app.model.services.TaxCalculator;
+
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -17,17 +20,17 @@ public class User {
 
     public void createTaxSheet(HashMap<String, BigDecimal> inputData) {
         for (Map.Entry<String, BigDecimal> pair : inputData.entrySet()) {
-            if ("income".equals(pair.getKey())) {
-                income = (new IncomeTax(pair.getValue())).getValue();
+            if (GlobalConstants.INCOME.equals(pair.getKey())) {
+                income = TaxCalculator.calculateIncomeTax(pair.getValue());
 
-            } else if ("sales".equals(pair.getKey())) {
-                sales = (new SalesTax(pair.getValue())).getValue();
+            } else if (GlobalConstants.SALES.equals(pair.getKey())) {
+                sales = TaxCalculator.calculateSalesTax(pair.getValue());
 
-            } else if ("interest".equals(pair.getKey())) {
-                interest = (new InterestTax(pair.getValue())).getValue();
+            } else if (GlobalConstants.INTEREST.equals(pair.getKey())) {
+                interest = TaxCalculator.calculateInterestTax(pair.getValue());
 
-            } else if ("gift".equals(pair.getKey())) {
-                gift = (new GiftTax(pair.getValue())).getValue();
+            } else if (GlobalConstants.GIFT.equals(pair.getKey())) {
+                gift = TaxCalculator.calculateGiftTax(pair.getValue());
 
             }
         }

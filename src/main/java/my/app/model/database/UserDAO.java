@@ -9,7 +9,7 @@ public interface UserDAO {
     List<User> findById();
     List<User> findByName();
     List<User> getAllUsers();
-    boolean addUser(User user);
-    boolean updateUser(User user);
-    boolean deleteUser(User user);
+    void addUser(User user);
+    void updateUser(User user);
+    void deleteUser(User user);
 }

@@ -1,5 +1,6 @@
 package my.app.model.database;
 
+import my.app.GlobalConstants;
 import my.app.model.entities.User;
 
 import java.sql.Connection;
@@ -18,7 +19,7 @@ public class UserDAOImpl implements UserDAO {
         connection = DbUtil.getConnection();
     }
 
-    public boolean addUser(User user) {
+    public void addUser(User user) {
         try {
             PreparedStatement preparedStatement = connection
                     .prepareStatement(DbQueries.ADD_INTO_TAX);
@@ -30,10 +31,8 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setBigDecimal(6, user.getSales());
 
             preparedStatement.executeUpdate();
-            return true;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
+            throw new RuntimeException();
         }
     }
 
@@ -44,17 +43,17 @@ public class UserDAOImpl implements UserDAO {
             ResultSet rs = statement.executeQuery(DbQueries.SELECT_ALL_FROM_TAX);
             while (rs.next()) {
                 User user = new User();
-                user.setId(rs.getInt("id"));
-                user.setName(rs.getString("name"));
-                user.setSurname(rs.getString("surname"));
-                user.setGift(rs.getBigDecimal("gift"));
-                user.setIncome(rs.getBigDecimal("income"));
-                user.setInterest(rs.getBigDecimal("interest"));
-                user.setSales(rs.getBigDecimal("sales"));
+                user.setId(rs.getInt(GlobalConstants.USER_ID));
+                user.setName(rs.getString(GlobalConstants.NAME));
+                user.setSurname(rs.getString(GlobalConstants.SURNAME));
+                user.setGift(rs.getBigDecimal(GlobalConstants.GIFT));
+                user.setIncome(rs.getBigDecimal(GlobalConstants.INCOME));
+                user.setInterest(rs.getBigDecimal(GlobalConstants.INTEREST));
+                user.setSales(rs.getBigDecimal(GlobalConstants.SALES));
                 users.add(user);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new RuntimeException();
         }
         return users;
     }
@@ -70,13 +69,11 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public boolean updateUser(User user) {
-        return false;
+    public void updateUser(User user) {
     }
 
     @Override
-    public boolean deleteUser(User user) {
-        return false;
+    public void deleteUser(User user) {
     }
 
 

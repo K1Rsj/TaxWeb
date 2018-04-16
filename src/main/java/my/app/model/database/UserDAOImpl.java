@@ -59,7 +59,7 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
-    public List<User> findById() {
+    public User findById() {
         return null;
     }
 

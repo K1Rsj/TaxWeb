@@ -11,9 +11,9 @@
     <title>Wrong Data</title>
 </head>
 <body>
-    <p>Your input data must consist only digits</p>
+    <p>Your income data must consist only digits and your name and surname must consist only letters</p>
     <br>
-    <p>Name and surname field can't be empty</p>
+    <p>Fields can't be empty</p>
 
     <button onclick="window.location.href='${pageContext.request.contextPath}/app/inputIncome'">Input your income</button>
 </body>

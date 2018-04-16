@@ -1,12 +1,8 @@
 package my.app.model.entities;
 
 
-import my.app.GlobalConstants;
-import my.app.model.services.TaxCalculator;
-
 import java.math.BigDecimal;
-import java.util.HashMap;
-import java.util.Map;
+
 
 public class User {
     private int id;
@@ -16,25 +12,6 @@ public class User {
     private BigDecimal sales;
     private BigDecimal interest;
     private BigDecimal gift;
-
-
-    public void createTaxSheet(HashMap<String, BigDecimal> inputData) {
-        for (Map.Entry<String, BigDecimal> pair : inputData.entrySet()) {
-            if (GlobalConstants.INCOME.equals(pair.getKey())) {
-                income = TaxCalculator.calculateIncomeTax(pair.getValue());
-
-            } else if (GlobalConstants.SALES.equals(pair.getKey())) {
-                sales = TaxCalculator.calculateSalesTax(pair.getValue());
-
-            } else if (GlobalConstants.INTEREST.equals(pair.getKey())) {
-                interest = TaxCalculator.calculateInterestTax(pair.getValue());
-
-            } else if (GlobalConstants.GIFT.equals(pair.getKey())) {
-                gift = TaxCalculator.calculateGiftTax(pair.getValue());
-
-            }
-        }
-    }
 
     public int getId() {
         return id;
@@ -93,14 +70,4 @@ public class User {
     }
 
 
-    @Override
-    public String toString() {
-        return "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", income tax=" + income +
-                ", sales tax=" + sales +
-                ", interest tax=" + interest +
-                ", gift tax=" + gift;
-    }
 }
